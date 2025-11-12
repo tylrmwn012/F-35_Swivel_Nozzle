@@ -1,12 +1,4 @@
-// this is my initial ARM project - code currently 
-//    moves through 0-180 degrees and back on six servos
-
-// list:
-// 6 servo motors
-// servo driver
-// potentiometer for each joint (6)
-// 5v battery pack
-// stepper motor
+// this is my initial ARM project
 #include <Servo.h>
 
 Servo shoulderOne;
@@ -17,6 +9,8 @@ Servo wristTwo;
 Servo gripper;
 
 void setup() {
+  Serial.begin(9600);
+
   shoulderOne.attach(9);
   shoulderTwo.attach(8);
   elbow.attach(7);
@@ -26,23 +20,17 @@ void setup() {
 }
 
 void loop() {
-  for (int i = 0; i <= 180; i++) {
-    shoulderOne.write(i);
-    shoulderTwo.write(i);
-    elbow.write(i);
-    wristOne.write(i);
-    wristTwo.write(i);
-    gripper.write(i);
-    delay(15);
-  }
+  int shoulderValue = analogRead(A1);
+  int elbowValue = analogRead(A2);
+  int wristOneValue = analogRead(A3);
+  int wristTwoValue = analogRead(A4);
+  int gripperValue = analogRead(A5);
 
-  for (int i = 180; i >= 0; i--) {
-    shoulderOne.write(i);
-    shoulderTwo.write(i);
-    elbow.write(i);
-    wristOne.write(i);
-    wristTwo.write(i);
-    gripper.write(i);
-    delay(15);
-  }
+  shoulderOne.write((shoulderValue * 180 + 511) / 1023);
+  shoulderTwo.write(-(shoulderValue * 180 + 511) / 1023);
+  elbow.write((elbowValue * 180 + 511) / 1023);
+  wristOne.write((wristOneValue * 180 + 511) / 1023);
+  wristTwo.write((wristTwoValue * 180 + 511) / 1023);
+  gripper.write((gripperValue * 180 + 511) / 1023);
+  delay(1);
 }
