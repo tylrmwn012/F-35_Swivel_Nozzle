@@ -1,32 +1,26 @@
 #include <Servo.h>
-Servo serOne;
-Servo serTwo;
-Servo serThree;
+Servo serOne, serTwo, serThree;
 
-const int CLKone = 13; // encoder pin A
-const int DTone = 12; // encoder pin B
+// rotary encoder one
+const int CLKone = 13, DTone = 12; 
 
-const int CLKtwo = 11; // encoder pin A
-const int DTtwo = 10; // encoder pin B
-
-const int CLKthree = 9; // encoder pin A
-const int DTthree = 8; // encoder pin B
-
-int counterOne = 90; // initial position at 90 degrees
-int counterTwo = 90; // initial position at 90 degrees
-int counterThree = 90; // initial position at 90 degrees
-
-int currStateCLKone; // current state of A
-int lastStateCLKone; // last state of A
+int currStateCLKone, lastStateCLKone; 
 int servoPosOne = 90;
 
-int currStateCLKtwo; // current state of A
-int lastStateCLKtwo; // last state of A
+// rotary encoder two
+const int CLKtwo = 11, DTtwo = 10; 
+
+int currStateCLKtwo, lastStateCLKtwo; 
 int servoPosTwo = 90;
 
-int currStateCLKthree; // current state of A
-int lastStateCLKthree; // last state of A
+// rotary encoder three
+const int CLKthree = 9, DTthree = 8; 
+
+int currStateCLKthree, lastStateCLKthree;
 int servoPosThree = 90;
+
+// counters
+int counterOne = 90, counterTwo = 90, counterThree = 90; 
 
 void setup() {
 // rotary encoders
@@ -76,14 +70,12 @@ void state(int &currStateCLK, int &lastStateCLK, int CLK, int DT, int &counter, 
 }
 
 void loop() {
-  // one
+  // Servo One State
   state(currStateCLKone, lastStateCLKone, CLKone, DTone, counterOne, servoPosOne, serOne);
 
-  // two
+  // Servo Two State
   state(currStateCLKtwo, lastStateCLKtwo, CLKtwo, DTtwo, counterTwo, servoPosTwo, serTwo);
 
-  // three
+  // Servo Three State
   state(currStateCLKthree, lastStateCLKthree, CLKthree, DTthree, counterThree, servoPosThree, serThree);
 }
-
-
